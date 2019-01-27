@@ -31,7 +31,7 @@ MOUNTPOINT="/${TEMPDIR}/max_img_$$"
 # Functions
 
 check_program() {
-	if ! dpkg-query -W "$1" > /dev/null 2>&1; then
+	if ! rpm -q "$1" > /dev/null 2>&1; then
 		echo
 		echo "Dependency \"$1\" is missing." 
 		echo "Should I try to install it? [y/N]"
@@ -39,7 +39,7 @@ check_program() {
 		case $response in 
 		[yY][eE][sS]|[yY]) 
 			echo "Installing \"$1\"..."
-	        	sudo apt-get install "$1" || exit 1
+			sudo zypper install "$1" || exit 1
 	        	;;
 	    	*)
 			echo "Dependencies not fulfilled."
@@ -64,9 +64,9 @@ dependency_checks() {
 	check_program wget
 	check_program sudo
 	check_program dmg2img
-	check_program hfsplus
-	check_program icnsutils
-	check_program default-jre
+	# check_program hfsplus
+	check_program icns-utils
+	# check_program default-jre
 }
 	
 install_maxapp() {
